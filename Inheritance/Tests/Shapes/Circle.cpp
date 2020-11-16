@@ -1,6 +1,6 @@
 #include "catch.hpp"
 
-#include "Inheritance/Circle.hpp"
+#include "Shapes/Circle.hpp"
 
 TEST_CASE("Testing Circle class", "[Circle]") {
     SECTION("Using area should return the area of a circle") {

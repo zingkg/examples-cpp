@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
-#include "Inheritance/Circle.hpp"
-#include "Inheritance/Rectangle.hpp"
+#include "Shapes/Circle.hpp"
+#include "Shapes/Rectangle.hpp"
 
 #include <memory>
 

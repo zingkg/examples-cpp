@@ -1,6 +1,6 @@
 #include "catch.hpp"
 
-#include "Inheritance/Square.hpp"
+#include "Shapes/Square.hpp"
 
 TEST_CASE("Testing Square class", "[Square]") {
     SECTION("Using area should return the area of a square") {
