@@ -1,0 +1,104 @@
+		*** Extra Credit Problem #2 (3 points) *** 
+
+       	    	        (DUE: 03/05/11 @ 11:59pm)
+
+Notes
+=====
+
+1) You should feel free to work with your HW4 partner on this extra
+   credit problem as it is based on your HW4 solution.
+
+2) I am giving this out now so that you can plan better.
+
+3) You'll need to submit hw4 and ec2 separately for grading
+   purposes. So you'll want to make sure that your hw4 submission
+   satisfies all the HW4 requirements (see the HW4 description) and
+   your ec2 submission satisfies those for extra credit (see below).
+
+4) Feel free to ask on SmartSite (chat room or the forum) if you need
+   any clarifications.
+
+Description 
+===========
+
+This extra credit problem is based on programming assignment 4. As you
+may know or notice, the Hamming distance is not a very good distance
+metric for correcting spelling errors. For example, "omework" is
+misspelled, and the Hamming distance between it and its correct
+spelling "homework" is eight (after padding the word "omework" to
+"omework "). However, we know that we only need a single edit
+operation by inserting an 'h' at the beginning of the word to correct
+the misspelling.
+
+To remedy this issue, instead of using the Hamming distance, we could
+use the Levenshtein distance (or edit distance) which measures the
+minimum number of edits needed to transform one string to the other
+(http://en.wikipedia.org/wiki/Levenshtein_distance). The allowed edit
+operations are insertion, deletion, or replacement of a single
+character.
+
+There are three small parts to this extra credit problem:
+
+1) Replace Hamming distance with your implementation of the
+Levenshtein distance (see the wiki page for more details) in your
+solution to programming assignment 4. You should implement it as a
+template function that works on any type T.
+
+2) Modify your implementation of the class Dict to include frequency
+information of the various elements. For example, in processing a data
+file, each word, phrase, or sentence should also have a count of how
+many times it occurs in the input data file. As frequency may be a
+better way to break ties of candidate completions with equal distance,
+you should modify your code to achieve this.
+
+3) Add support for the following member functions to your code:
+   
+	virtual void completeFreq(const Dict &d) = 0;
+	virtual void checkLevFreq(const Dict &d) = 0;
+
+where 
+
+- completeFreq: computes the top 10 completions as before, but using
+  frequencies of the candidate completions and then their dictionary
+  order to break ties.
+
+- checkLevFreq: computes the top 10 completions with possible
+  corrections using the Levenshtein distance. Similarly, ties are
+  broken using frequencies of the candidate completions and then their
+  dictionary order.
+
+As before, the show member function should display the last computed
+top 10 completions on this element.
+
+
+Submission
+==========
+
+1. Create a new subdirectory in your home directory, say ec2.
+
+2. Copy your work to that new directory.
+
+3. Change into the ec2 directory (cd ec2).
+
+4. Submit by running the following commands:
+   
+	zip -r ec2 *
+   	handin cs40a ec2 ec2.zip
+
+   This will zip all files and subdirectories in your current
+   directory and submit the file ec2.zip.
+
+   The name ec2 is a name the cs40a account uses for this extra credit
+   problem; be sure to use the exact name.
+
+5. You can also double-check whether your solution has been submitted
+   to the right place:
+
+      	handin cs40a ec2
+
+6. If you want to resubmit your solution before the deadline, feel
+   free to do so (but the timestamp we will use is the last time that
+   you submit).
+
+7. Solutions are due at 11:59pm on March 5th, 2011. Remember to submit
+   before the deadline; we will not accept late submissions.

@@ -11,5 +11,9 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/Output/Install)
 
 file(GLOB WEISS_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "Weiss/*.cpp")
 file(GLOB BAGS_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "Bags/*.cpp")
-add_executable(Bags ${WEISS_SRC} ${BAGS_SRC})
+file(GLOB MAIN_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "Main/*.cpp")
+add_executable(Bags ${WEISS_SRC} ${BAGS_SRC} ${MAIN_SRC})
 set_target_properties(Bags PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Output)
+
+enable_testing(true)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Tests/)

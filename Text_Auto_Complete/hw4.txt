@@ -1,0 +1,28 @@
+As everyone probably has noticed, Google search has two nice features to help users write search queries:
+1) query corrections and
+2) automatic query completion. This programming assignment asks you to implement the necessary support for basic automatic query completion. What you are asked to implement is quite similar to what Google provides in spirit, but with some differences.
+
+You are given an English text document data.txt. Based on information in data.txt, you will need to provide automatic completion support at three levels:
+1. Word-level: For a given partial word w , the completion of w is the top 10 words that complete w ,
+ranked in terms of “how close” they are to w.
+2. Phrase-level: For a given phrase—a string of words— p , the completion of p is the top 10 phrases that complete p, ranked in terms “how close” they are to p.
+3. Sentence-level: For a given partial sentence s , the completion of s is the top 10 sentences that completes, ranked in “how close” they are to s.
+
+Here “how close” is defined in terms of the Hamming distance ( http://en.wikipedia.org/wiki/Hamming_distance ). Given two equal-length strings s 1 and s 2 , the Hamming distance d(s 1 ,s 2 ) is the number of positions at which the corresponding bytes are different. If s 1 and s 2 are of different lengths, we simply pad the shorter string with empty spaces and then compute the strings’ Hamming distance. For completion, the distance is simply the strings’ length difference. For completion with possible correction, we use the Hamming distance. We break ties using the dictionary order.
+
+More Details
+- Provided files: data.txt and Makefile.
+The supplied data.txt contains the first few chapters of Mark Twain’s ”Adventures of Huckleberry Finn” from Project Gutenberg ( http://www.gutenberg.org/ ). Project Gutenberg is a large collection of free books (in many different formats, including plain text). You can get additional test data there.
+- Files to be submitted : README , main.cpp , element.h , word.h & word.cpp , phrase.h & phrase.cpp, sentence.h & sentence.cpp, and dict.h & dict.cpp.
+- Write a README file to document your main design decisions and what aspects of your code work and what do not. Format the content of this file using a bulleted list. The first line of the README file must contain full names of the team members, for example:
+1 // Jane Doe, John Doe
+- Write a main program in main.cpp to exercise your code: 1) when user enters a partial word, say “progra”, then the tab character and newline, it outputs the top 10 completions of the word, such as “program”; 2) when user enters a phrase, say “very nice“, then the empty space and newline, it outputs the top 10 completions of the phrase, such as “very nice work”; and 3) when user enters a partial sentence, such as “I like this”, then the period and newline, it outputs the sentence’s top 10 completions, such as “I like this homework.”
+- Define the class Element in element.h . It is an abstract and the base class for the three types of language elements: class Word, class Phrase, and class Sentence. The key member functions to include are:
+virtual void complete(const Dict &d) = 0;
+virtual void check(const Dict &d) = 0;
+virtual void show() const = 0;
+where complete computes the top 10 completions given the dictionary d , check computes the top 10 completions with possible corrections, and show displays the top 10 completions.
+- Define the three derived classes— Word , Phrase , and Sentence —to implement the required completion and show functionalities.
+- Define the class Dict in dict.h and dict.cpp . The class is used to process a given input data file to facilitate the three types of automatic completion. In particular, define the following constructor:
+Dict(string f);
+which processes the input file f and stores the list of unique words (using white space as the delimiter for words), the list of phrases, and the list of unique sentences (using period as the delimiter for sentences). For phrases, you only need to consider word sequences of length 2 to 5

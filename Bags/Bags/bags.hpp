@@ -2,7 +2,6 @@
 #define BAGS_HPP
 
 #include <fstream>
-#include <iostream>
 #include <memory>
 #include <queue>
 #include <sstream>
@@ -14,11 +13,14 @@
 
 class Bags {
 public:
-  static void weissBags(const std::string &fileName, const std::string &maxSizeStr);
+  static std::vector<uint16_t> weissBags(const std::vector<uint16_t> &bags, const uint16_t maxSize);
 
-  static void stlBags(const std::string &fileName, const std::string &maxSizeStr);
+  static std::vector<uint16_t> stlBags(const std::vector<uint16_t> &bags, const uint16_t maxSize);
 
-  static void stlFunctionalBags(const std::string &fileName, const std::string &maxSizeStr);
+  static std::vector<uint16_t> stlFunctionalBags(
+    const std::vector<uint16_t> &bags,
+    const uint16_t maxSize
+  );
 };
 
 #include "../Weiss/QueueAr.cpp"

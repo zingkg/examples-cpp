@@ -1,18 +1,13 @@
 #include "bags.hpp"
 
-void Bags::weissBags(const std::string &fileName, const std::string &maxSizeStr) {
-  std::ifstream file;
-  file.open(fileName, std::ios::in);
-  
+std::vector<uint16_t> Bags::weissBags(const std::vector<uint16_t> &bags, const uint16_t maxSize) {
   typedef Queue<short>* QueuePtr;
-  const int maxSize = atoi(maxSizeStr.data());
-  short bags;
   QueuePtr qPtr = new Queue<short>(maxSize);
   StackLi<QueuePtr> bagLi;
 
-  while (file >> bags) {
-    qPtr->enqueue(bags);
-    
+  for (auto it = bags.cbegin(); it != bags.cend(); ++it) {
+    qPtr -> enqueue(*it);
+
     if (qPtr->isFull()) {
       bagLi.push(qPtr);
       qPtr = new Queue<short>(maxSize);
@@ -25,29 +20,25 @@ void Bags::weissBags(const std::string &fileName, const std::string &maxSizeStr)
     delete qPtr;
   }
 
+  std::vector<uint16_t> result;
   while (!bagLi.isEmpty()) {
     const QueuePtr topQueuePtr = bagLi.topAndPop();
     while (!topQueuePtr->isEmpty()) {
-      std::cout << topQueuePtr->dequeue() << " ";
+      result.push_back(topQueuePtr->dequeue());
     }
     delete topQueuePtr;
   }
 
-  std::cout << std::endl;
+  return result;
 }
 
-void Bags::stlBags(const std::string &fileName, const std::string &maxSizeStr) {
-  const uint16_t maxSize = Common::parseInt(maxSizeStr);
-  std::ifstream file;
-  file.open(fileName, std::ios::in);
-
+std::vector<uint16_t> Bags::stlBags(const std::vector<uint16_t> &bags, const uint16_t maxSize) {
   uint16_t count = 0;
-  uint16_t bags;
   std::unique_ptr<std::queue<uint16_t> > qPtr(new std::queue<uint16_t>());
   std::stack<std::unique_ptr<std::queue<uint16_t> > > bagLi;
 
-  while (file >> bags) {
-    qPtr->push(bags);
+  for (auto it = bags.cbegin(); it != bags.cend(); ++it) {
+    qPtr->push(*it);
     count++;
 
     if (count == maxSize) {
@@ -61,29 +52,27 @@ void Bags::stlBags(const std::string &fileName, const std::string &maxSizeStr) {
     bagLi.push(std::move(qPtr));
   }
 
-  do {
-    do {
-      std::cout << bagLi.top()->front() << " ";
+  std::vector<uint16_t> result;
+  while (!bagLi.empty()) {
+    while (!bagLi.top()->empty()) {
+      result.push_back(bagLi.top()->front());
       bagLi.top()->pop();
-    } while (!bagLi.top()->empty());
+    }
     bagLi.pop();
-  } while (!bagLi.empty());
-
-  std::cout << std::endl;
+  }
+  return result;
 }
 
-void Bags::stlFunctionalBags(const std::string &fileName, const std::string &maxSizeStr) {
-  const uint16_t maxSize = Common::parseInt(maxSizeStr);
-  std::ifstream file;
-  file.open(fileName, std::ios::in);
-
-  uint16_t bags;
+std::vector<uint16_t> Bags::stlFunctionalBags(
+  const std::vector<uint16_t> &bags,
+  const uint16_t maxSize
+) {
   std::unique_ptr<std::vector<uint16_t> > qPtr(new std::vector<uint16_t>());
   std::vector<std::unique_ptr<const std::vector<uint16_t> > > bagList;
 
   uint16_t count = 0;
-  while (file >> bags) {
-    qPtr->push_back(bags);
+  for (auto it = bags.cbegin(); it != bags.cend(); ++it) {
+    qPtr->push_back(*it);
     count++;
 
     if (count == maxSize) {
@@ -97,10 +86,11 @@ void Bags::stlFunctionalBags(const std::string &fileName, const std::string &max
     bagList.push_back(std::move(qPtr));
   }
 
+  std::vector<uint16_t> result;
   for (auto crIt = bagList.crbegin(); crIt != bagList.crend(); crIt++) {
     for (auto cIt = (*crIt)->cbegin(); cIt != (*crIt)->cend(); cIt++) {
-      std::cout << *cIt << " ";
+      result.push_back(*cIt);
     }
   }
-  std::cout << std::endl;
+  return result;
 }
