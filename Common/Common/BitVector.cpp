@@ -23,13 +23,13 @@ BitVector::BitVector(const std::uint32_t num) {
     checker > 0x00000000 && it != bits.rend();
     checker = checker >> 1, charBits = charBits >> 1
   ) {
-      if (charBits == 0x00) {
-        ++it;
-        charBits = 0x80;
-      }
+    if (charBits == 0x00) {
+      ++it;
+      charBits = 0x80;
+    }
 
-      if ((num & checker) == checker)
-        *it |= charBits;
+    if ((num & checker) == checker)
+      *it |= charBits;
   }
 }
 
@@ -51,7 +51,7 @@ bool BitVector::getBit(const std::uint32_t position) const {
 
   const std::uint32_t bytePosition = position / (sizeof(position) * 8);
   const std::uint32_t checker = 1 << (position % (sizeof(position) * 8));
-  return bits[bytePosition] & checker;
+  return (bits[bytePosition] & checker) == checker;
 }
 
 std::string BitVector::getBitString() const {
